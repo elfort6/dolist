@@ -6,12 +6,12 @@ dotenv.config();
 const config = {
   name: 'mongo',
   connector: 'mongodb',
-  url: 'mongodb+srv://elfort6:contrasenia@cluster0.swzktuc.mongodb.net/dolist',
-  host: 'ac-gema7ez-shard-00-01.swzktuc.mongodb.net',
-  port: 27017,
-  user: 'elfort6',
-  password: 'contrasenia',
-  database: 'dolist',
+  url: process.env.URLMONGO,
+  host: process.env.HOSTMONGO,
+  port: process.env.PORTMONGO,
+  user: process.env.USERMONGO,
+  password: process.env.PASSWORDMONGO,
+  database: process.env.DATBASEMONGO,
   useNewUrlParser: true
 };
 
