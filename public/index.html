@@ -27,7 +27,7 @@
         <h4>Lista de quehaceres</h4>
       </div>
       <div class="card-body">
-        <form class="row g-3">
+        <form class="row g-3" id="frmAgregar">
           <div class="col-md-4">
             <label for="validationDefault01" class="form-label">Tarea</label>
             <input type="text" class="form-control" id="tarea" name="tarea" value="" required>
@@ -39,11 +39,9 @@
           <div class="col-md-4">
             <label for="validationDefault02" class="form-label">Fecha para realizar</label>
             <input type="text" class="form-control" id="fecha_realizar" name="fecha_realizar" value="" required>
-          </div>
-          <input type="hidden" class="form-control" id="fecha_creacion" name="fecha_creacion" value="" required>
-          <div class="col-12">
-            <button class="btn btn-primary" type="submit">Submit form</button>
-          </div>
+            <div class="col-12">
+              <button class="btn btn-primary" onclick="obenerFormJSON()">Agregar</button>
+            </div>
         </form>
       </div>
     </div>
@@ -63,18 +61,7 @@
               </tr>
             </thead>
             <tbody id="cuerpoDeLaTabla">
-              <tr>
-                <td>1</td>
-                <td>a</td>
-                <td>1</td>
-                <td>a</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>b</td>
-                <td>1</td>
-                <td>a</td>
-              </tr>
+
             </tbody>
           </table>
         </div>
@@ -91,6 +78,39 @@
     crossorigin="anonymous"></script>
   <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script>
+
+    var cargarTabla = function () {
+      console.log("Prueba");
+      $.ajax({
+        type: "GET",
+        url: "/servicio",
+      }).done(function (result) {
+        $("#cuerpoDeLaTabla").html("");
+        for (var i = 0; i < result.length; i++) {
+
+
+          $("#cuerpoDeLaTabla").append(`
+          <tr>
+                <td>${result[i].tarea}</td>
+                <td>${result[i].descripcion}</td>
+                <td>${result[i].fecha_creacion}</td>
+                <td>${result[i].fecha_realizar}</td>
+          </tr>
+          `);
+
+        }
+
+      });
+    }
+    var obenerFormJSON = function () {
+      return {
+        "tarea": $("#tarea").val,
+        "descripcion": $("#descripcion").val,
+        "fecha_creacion": $("#fecha_creacion").val,
+        "fecha_realizar": $("#fecha_realizar").val
+      }
+
+    }
     $(document).ready(function () {
       $('#tabla').DataTable({
         language: {
@@ -119,31 +139,8 @@
     });
 
     (function () {
-      console.log("Prueba");
-      $.ajax({
-        type: "GET",
-        url: "/servicio",
-      }).done(function (result) {
-        $("#cuerpoDeLaTabla").html("");
-        for (var i = 0; i < result.length; i++) {
+      cargarTabla();
 
-
-          $("#cuerpoDeLaTabla").append(`
-          <tr>
-                <td>${result[i].tarea}</td>
-                <td>${result[i].descripcion}</td>
-                <td>${result[i].fecha_creacion}</td>
-                <td>${result[i].fecha_realizar}</td>
-          </tr>
-          `);
-          //console.log(result[i])
-
-
-
-        }
-        //console.log(result)
-
-      });
     })();
   </script>
 </body>
