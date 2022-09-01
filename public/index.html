@@ -38,9 +38,9 @@
           </div>
           <div class="col-md-4">
             <label for="validationDefault02" class="form-label">Fecha para realizar</label>
-            <input type="text" class="form-control" id="fecha_realizar" name="fecha_realizar" value="" required>
+            <input type="date" class="form-control" id="fecha_realizar" name="fecha_realizar" value="" required>
             <div class="col-12">
-              <button class="btn btn-primary" onclick="obenerFormJSON()">Agregar</button>
+              <button class="btn btn-primary">Agregar</button>
             </div>
         </form>
       </div>
@@ -104,10 +104,10 @@
     }
     var obenerFormJSON = function () {
       return {
-        "tarea": $("#tarea").val,
-        "descripcion": $("#descripcion").val,
-        "fecha_creacion": $("#fecha_creacion").val,
-        "fecha_realizar": $("#fecha_realizar").val
+        tarea: $("#tarea").val(),
+        descripcion: $("#descripcion").val(),
+        fecha_creacion: new Date().toISOString(),
+        fecha_realizar: $("#fecha_realizar").val()
       }
 
     }
@@ -141,7 +141,36 @@
     (function () {
       cargarTabla();
 
-    })();
+      $(document).on('submit', 'form', function (evt) {
+        evt.preventDefault();
+        console.log({
+          tarea: $("#tarea").val(),
+          descripcion: $("#descripcion").val(),
+          fecha_creacion: new Date().toISOString(),
+          fecha_realizar: $("#fecha_realizar").val()
+        })
+        $.ajax({
+          type: "Post",
+          url: "/servicio",
+          contentType: "application/json",
+          data: JSON.stringify({
+            tarea: $("#tarea").val(),
+            descripcion: $("#descripcion").val(),
+            fecha_creacion: new Date().toISOString(),
+            fecha_realizar: $("#fecha_realizar").val()
+          }),
+        }).done(function (result) {
+          console.log(result)
+        });
+        cargarTabla();
+      });
+
+    }
+
+    )();
+
+
+
   </script>
 </body>
 
