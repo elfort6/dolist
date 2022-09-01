@@ -96,7 +96,7 @@
                 <td>${result[i].descripcion}</td>
                 <td>${result[i].fecha_creacion}</td>
                 <td>${result[i].fecha_realizar}</td>
-                <td>1</td>
+                <td><button type="button" class="btn btn-danger" onClick="Eliminar('${result[i]._id}')">Eliminar</button></td>
           </tr>
           `);
 
@@ -114,8 +114,20 @@
       }
 
     }
+    var Eliminar = function (params) {
+      console.log(params)
+      $.ajax({
+        type: "DELETE",
+        url: "/servicio/" + params
+      }).done(function (result) {
+        console.log(result)
+      });
+      cargarTabla();
+
+    }
     $(document).ready(function () {
       $('#tabla').DataTable({
+        responsive: true, retrieve: true,
         language: {
           processing: "Procesando..",
           search: "Buscar&nbsp;:",

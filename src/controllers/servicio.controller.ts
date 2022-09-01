@@ -4,18 +4,12 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Registros} from '../models';
 import {RegistrosRepository} from '../repositories';
@@ -23,8 +17,8 @@ import {RegistrosRepository} from '../repositories';
 export class ServicioController {
   constructor(
     @repository(RegistrosRepository)
-    public registrosRepository : RegistrosRepository,
-  ) {}
+    public registrosRepository: RegistrosRepository,
+  ) { }
 
   @post('/servicio')
   @response(200, {
@@ -105,7 +99,7 @@ export class ServicioController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Registros, {exclude: 'where'}) filter?: FilterExcludingWhere<Registros>
   ): Promise<Registros> {
     return this.registrosRepository.findById(id, filter);
@@ -116,7 +110,7 @@ export class ServicioController {
     description: 'Registros PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +128,7 @@ export class ServicioController {
     description: 'Registros PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() registros: Registros,
   ): Promise<void> {
     await this.registrosRepository.replaceById(id, registros);
@@ -144,7 +138,7 @@ export class ServicioController {
   @response(204, {
     description: 'Registros DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.registrosRepository.deleteById(id);
   }
 }
