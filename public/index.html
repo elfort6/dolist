@@ -124,7 +124,24 @@
         type: "GET",
         url: "/servicio",
       }).done(function (result) {
-        console.log(result)
+        $("#cuerpoDeLaTabla").html("");
+        for (var i = 0; i < result.length; i++) {
+
+
+          $("#cuerpoDeLaTabla").append(`
+          <tr>
+                <td>${result[i].tarea}</td>
+                <td>${result[i].descripcion}</td>
+                <td>${result[i].fecha_creacion}</td>
+                <td>${result[i].fecha_realizar}</td>
+          </tr>
+          `);
+          //console.log(result[i])
+
+
+
+        }
+        //console.log(result)
 
       });
     })();
