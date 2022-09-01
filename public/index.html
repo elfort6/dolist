@@ -58,6 +58,7 @@
                 <th>Descripción</th>
                 <th>Fecha de creación</th>
                 <th>Fecha para realizar</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody id="cuerpoDeLaTabla">
@@ -95,12 +96,14 @@
                 <td>${result[i].descripcion}</td>
                 <td>${result[i].fecha_creacion}</td>
                 <td>${result[i].fecha_realizar}</td>
+                <td>1</td>
           </tr>
           `);
 
         }
 
       });
+
     }
     var obenerFormJSON = function () {
       return {
